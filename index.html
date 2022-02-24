@@ -26,16 +26,13 @@
               <a class="nav-link active" aria-current="page" href="#">Atas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">Tentang</a>
+              <a class="nav-link" href="#about">Tambahan</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#projects">Fav Card</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#card1">Tambahan</a>
+              <a class="nav-link" href="#contact">Kritik dan saran</a>
             </li>
           </ul>
         </div>
@@ -63,17 +60,17 @@
       <div class="container">
         <div class="row text-center mb-3">
           <div class="col">
-            <h2>About Me</h2>
+            <h2>Tambahan</h2>
           </div>
         </div>
         <div class="row justify-content-center fs-5 text-center">
           <div class="col-md-4">
-            <p>Welcome User</p>
-            <p>Cuma coba bang, gak bagus" amat</p>
+            <p>Welcome</p>
+            <p>Cuma coba, gak bagus" amat</p>
           </div>
           <div class="col-md-4">
             <p>gaada apa apa disini</p>
-            <p>Mending Share meme</p>
+            <p>Scrool aja</p>
           </div>
         </div>
       </div>
@@ -128,7 +125,7 @@
               <img src="img/projects/Wallpaper White Nadia.png" class="card-img-top" alt=project4" />
               <div class="card-body">
                 <p align="center" class="card-text">|Nadia|</p>
-                <p align="center" class="card-text">Kuchiyose no jutsu</p>
+                <p align="center" class="card-text">Mau reset RP?</p>
               </div>
             </div>
           </div>
@@ -158,30 +155,42 @@
       <div class="container">
         <div class="row text-center mb-3">
           <div class="col mb-6">
-            <h2>Contact me</h2>
+            <h2>Kritik dan Saran</h2>
+
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <form>
+            <form name="form-ws">
               <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" />
+                <input type="text" class="form-control" id="name" aria-describedby="name" name="nama" />
                 
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" />
+                <input type="email" class="form-control" id="email" aria-describedby="email" name="email" />
               <div class="mb-3">
                   <label for="pesan" class="form-label">Pesan yang ingin disampaikan</label>
-                  <textarea class="form-control" id="pesan" rows="3"></textarea>
+                  <textarea class="form-control" id="pesan" rows="3" name="pesan"></textarea>
                 </div>
-            <button type="button" class="btn btn-primary">Kirim</button>
+                <!-- Alert -->
+                <div class="alert alert-success alert-dismissible fade show d-none" role="alert">
+  <strong>Terimakasih!</strong> Pesan anda sudah tersampaikan.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+                <!-- Akhir Alert -->
+            <button type="submit" class="btn btn-primary btn-kirim">Kirim</button>
+            <button class="btn btn-primary btn-load d-none" type="button" disabled>
+  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+  Loading...
+</button>
             </form>
           </div>
         </div>
       </div>
     </section>
     <!-- Akhir Contact -->
+
 
     <!-- Footer -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -196,5 +205,30 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbx9gyLHQhFKU4_RF3Lugj7PouCLuogMmFuMd_38VMD-YhbOrWRb4ik1RdB08mM6QjQC/exec'
+
+  const form = document.forms['form-ws']
+  const btnKirim = document.querySelector('.btn-kirim');
+  const btnLoad = document.querySelector('.btn-load');
+  const myAlert = document.querySelector('.alert');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    btnLoad.classList.toggle('d-none');
+    btnKirim.classList.toggle('d-none');
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        btnLoad.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+        myAlert.classList.toggle('d-none');
+        //reset
+        form.reset();
+        console.log('Success!', response)
+      })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
   </body>
 </html>
